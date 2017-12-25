@@ -6,6 +6,6 @@ So, we can do the DMFT calculation with CTAUX impurity solver with Julia 0.6.0.
 
 This code calculates the DMFT in the Bethe lattice. 
 
-Note: This code is a test code. I do not guarantee a correctness of this code. 
+Note: This code is a test code. I do not guarantee any results with this code. 
 Just play it!
 
