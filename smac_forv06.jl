@@ -5,7 +5,6 @@
 
 module Smac
     export smac_main!
-    using LinearAlgebra
 
     function smac_main!(M,N,orbitals,omegamax,β,vec_G)
         mat_K = zeros(Float64,M,N)

@@ -1,8 +1,7 @@
-
+include("ctaux_forv06.jl")
 module dmft
-    include("ctaux.jl")
     export dmft_solver
-    using .Ctauxsolver
+    import Ctaux
 
     function dmft_solver(β0,U0,μ0,K0,mqs0,ntime0,mfreq0,norbs0,V0,nthermal0,mkink0,itemax,α)
     
@@ -10,12 +9,11 @@ module dmft
         println( "--Dynamical Mean Field Theory for the Bethe lattice            --")
         println( "--                                                             --")
         println( "--                      Yuki Nagai, Ph.D 12/15/2017(MM/DD/YY)  --")
-        println( "--       The code works with Julia 0.7.0 08/09/2018(MM/DD/YY)  --")
         println( "-----------------------------------------------------------------")
 
         println( "-----------------------------------------------------------------")    
         println("DMFT: Initial calculation")        
-        τmesh,Gτ,orderdisp,S,Gω,ωmesh = ctaux_solver(β0,U0,μ0,K0,mqs0,ntime0,mfreq0,norbs0,V0,nthermal0,mkink0,false)
+        τmesh,Gτ,orderdisp,S,Gω,ωmesh = Ctaux.ctaux_solver(β0,U0,μ0,K0,mqs0,ntime0,mfreq0,norbs0,V0,nthermal0,mkink0,false)
         println("Gτ[1] = ",Gτ[1,1]," Gτ[ntime] = ",Gτ[ntime0,1])
     
         #return τmesh,Gτ,Gω,ωmesh
@@ -30,7 +28,7 @@ module dmft
         println("DMFT: Loops start!")
         error = 0.0
         for ite in 1:itemax
-            τmesh,Gτ,orderdisp,S,Gω,ωmesh = ctaux_solver_general(Δ,β0,U0,μ0,K0,mqs0,ntime0,mfreq0,norbs0,V0,nthermal0,mkink0,false)
+            τmesh,Gτ,orderdisp,S,Gω,ωmesh = Ctaux.ctaux_solver_general(Δ,β0,U0,μ0,K0,mqs0,ntime0,mfreq0,norbs0,V0,nthermal0,mkink0,false)
             h1 = 0.0
             h2 = 0.0
             for i in 1:norbs0

@@ -1,8 +1,5 @@
-module Ctauxsolver
+module Ctaux
     import  Dierckx
-    using Random
-    using LinearAlgebra
-    using FFTW
     export ctaux_solver,ctaux_solver_general,symmetrize
 
     function ctaux_solver_general(Δ,β,U,μ,K,mqs,ntime,mfreq,norbs,V,nthermal,mkink,display)
@@ -21,13 +18,12 @@ module Ctauxsolver
         
         
     
-        println( "----------------------------------------------------------")
-        println( "--    Continuous-time auxiliary-field Monte Carlo method--")
-        println( "--                           for quantum impurity models--")
-        println( "--                                                      --")
-        println( "--             See, E. Gull et al., EPL 82, 57003 (2008)--")
-        println( "--                 Yuki Nagai, Ph.D 10/24/2017(MM/DD/YY)--")
-        println( "-- The code works with Julia 0.7.0 08/09/2018(MM/DD/YY) --")
+        println( "------------------------------------------------------")
+        println( "--Continuous-time auxiliary-field Monte Carlo method--")
+        println( "--                       for quantum impurity models--")
+        println( "--                                                  --")
+        println(  "--         See, E. Gull et al., EPL 82, 57003 (2008)--")
+        println(  "--             Yuki Nagai, Ph.D 10/24/2017(MM/DD/YY)--")
         println(  "------------------------------------------------------")
         println(  "Parameters")
         println(  "Inverse temperature: β = ",β)
@@ -155,7 +151,7 @@ module Ctauxsolver
 
 
 
-        Random.seed!(1234)
+        srand(1234)
     
 #        global μ,β,U,K
 #        global Ef
@@ -222,9 +218,7 @@ module Ctauxsolver
         global debug
         debug = false
 
-#        
-    
-        Random.seed!(1234)
+        srand(1234)
     
 #        global μ,β,U,K
 #        global Ef
@@ -838,7 +832,7 @@ module Ctauxsolver
             for sigma in 1:norbs
                 Gτ[i,sigma] = Gτ0spl[sigma](τ)
             end
-            gsum[:] .=0.0
+            gsum[:] =0.0
             for j in 1:i
                 τt = τmesh[j]
                 dτ = τ-τt
@@ -935,7 +929,7 @@ module Ctauxsolver
             kk = indexcon[k]
             τk = τcon[kk]
             iτ = ceil(Int64,ntime*τk/β)
-            Mkl[:] .= 0.0#zeros(Float64,norbs)
+            Mkl[:] = 0.0#zeros(Float64,norbs)
             for l in 1:currentk
                 ll = indexcon[l]
                 for sigma in 1:norbs                
@@ -1024,7 +1018,7 @@ module Ctauxsolver
   
         
         gτ = zeros(Float64,ntime)
-        gτ[1:ntime]= real(gk[1:ntime])*(2/β).-tail/2
+        gτ[1:ntime]= real(gk[1:ntime])*(2/β)-tail/2
      
         a = real(vω[mfreq])*ωmesh[mfreq]/π
         gτ[1] += a
